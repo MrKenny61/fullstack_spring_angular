@@ -1,0 +1,23 @@
+<h2>Orders List</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let order of orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.client }}</td>
+            <td>{{ order.date | date:'medium' }}</td>
+            <td>
+                <button (click)="orderInfo(order.id!)" class="btn btn-info mx-2">Info</button>
+                <button (click)="editOrder(order.id!)" class="btn btn-primary mx-2">Edit</button>
+                <button (click)="deleteOrder(order.id!)" class="btn btn-danger mx-2">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
