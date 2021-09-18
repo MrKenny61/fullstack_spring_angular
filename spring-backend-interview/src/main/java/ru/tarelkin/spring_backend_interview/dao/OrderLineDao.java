@@ -9,6 +9,7 @@ import ru.tarelkin.spring_backend_interview.model.Order;
 import ru.tarelkin.spring_backend_interview.model.OrderLine;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderLineDao extends JpaRepository<OrderLine, Integer> {
@@ -16,5 +17,5 @@ public interface OrderLineDao extends JpaRepository<OrderLine, Integer> {
             + "from OrderLine ol join ol.order o join ol.goods g where o.id = :id")
     List<GoodsList> getGoodsListByOrderId(Integer id);
 
-    OrderLine findOrderLineByOrderAndGoods(Order order, Goods goods);
+    Optional<OrderLine> findOrderLineByOrderAndGoods(Order order, Goods goods);
 }

@@ -24,14 +24,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
 
-    public Order(@NonNull String client, @NonNull String address) {
-        this.client = client;
-        this.address = address;
-    }
-
-    public Order() {
-
-    }
+    public Order() {}
 
     public Order(Integer id, String client, Date date, String address) {
         this.id = id;

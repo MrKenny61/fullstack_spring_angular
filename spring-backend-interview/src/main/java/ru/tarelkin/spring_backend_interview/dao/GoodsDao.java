@@ -16,5 +16,6 @@ public interface GoodsDao extends JpaRepository<Goods, Integer> {
     @Query("select new ru.tarelkin.spring_backend_interview.model.Goods(g.id, g.name, g.price) from Goods g where id=:id")
     Optional<Goods> findById(Integer id);
 
+    @Query("select new ru.tarelkin.spring_backend_interview.model.Goods(g.id, g.name, g.price) from Goods g where name=:name")
     Optional<Goods> findByName(String name);
 }

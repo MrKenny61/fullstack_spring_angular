@@ -26,9 +26,7 @@ public class Goods {
         this.price = price;
     }
 
-    public Goods() {
-
-    }
+    public Goods() {}
 
     public Integer getId() {
         return id;
