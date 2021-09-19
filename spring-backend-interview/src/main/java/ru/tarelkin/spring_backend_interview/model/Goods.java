@@ -34,12 +34,11 @@ public class Goods {
 
     public void setId(Integer id) { this.id = id; }
 
-    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -61,6 +60,6 @@ public class Goods {
 
     @Override
     public String toString() {
-        return "Product " + name + "; Price " + price + " " + orderLines.toString();
+        return "Product " + name + "; Price " + price;
     }
 }

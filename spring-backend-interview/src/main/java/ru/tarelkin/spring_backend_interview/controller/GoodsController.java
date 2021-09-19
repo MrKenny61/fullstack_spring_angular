@@ -22,13 +22,11 @@ public class GoodsController {
         this.goodsService = goodsService;
     }
 
-    //get all goods
     @GetMapping
     public List<Goods> goods() {
         return goodsService.findAll();
     }
 
-    //create goods rest api
     @PostMapping
     public Goods createGoods(@RequestBody Goods goods) {
         return goodsService.save(goods);
@@ -42,7 +40,11 @@ public class GoodsController {
 
     @PatchMapping("/{id}")
     public Goods updateGoods(@PathVariable Integer id, @RequestBody Goods goodsUpdated) {
-        return goodsService.update(id, goodsUpdated);
+        Goods goods = goodsService.findById(id);
+        goods.setName(goodsUpdated.getName());
+        goods.setPrice(goodsUpdated.getPrice());
+
+        return goodsService.save(goods);
     }
 
     @DeleteMapping({"/{id}"})

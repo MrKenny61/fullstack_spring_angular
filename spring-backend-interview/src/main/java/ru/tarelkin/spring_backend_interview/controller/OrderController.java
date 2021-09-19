@@ -3,8 +3,6 @@ package ru.tarelkin.spring_backend_interview.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.tarelkin.spring_backend_interview.dao.OrderDao;
-import ru.tarelkin.spring_backend_interview.dao.OrderLineDao;
 import ru.tarelkin.spring_backend_interview.model.*;
 import ru.tarelkin.spring_backend_interview.service.GoodsService;
 import ru.tarelkin.spring_backend_interview.service.OrderLineService;
@@ -38,15 +36,7 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public OrderInfo getOrderById(@PathVariable Integer id) {
-        Order clientInfo = orderService.findById(id);
-
-        List<GoodsList> goodsInList = orderLineService.getGoodsListByOrderId(id);
-
-        OrderInfo orderinfo = new OrderInfo();
-        orderinfo.setClientInfo(clientInfo);
-        orderinfo.setGoodsInList(goodsInList);
-
-        return orderinfo;
+        return orderService.getOrderById(id);
     }
 
     @PostMapping
@@ -70,20 +60,15 @@ public class OrderController {
 
     @GetMapping("/{id}/edit")
     public OrderInfo editOrder(@PathVariable Integer id) {
-        Order clientInfo = orderService.findById(id);
-
-        List<GoodsList> goodsInList = orderLineService.getGoodsListByOrderId(id);
+        OrderInfo orderInfo = orderService.getOrderById(id);
 
         List<Integer> goodsIds = new ArrayList<>();
-        goodsInList.forEach(g->goodsIds.add(g.getId()));
-        List<Goods> goodsNotInList = goodsService.findAll().stream().filter(g->!goodsIds.contains(g.getId())).collect(Collectors.toList());
+        orderInfo.getGoodsInList().forEach(g->goodsIds.add(g.getId()));
+        List<Goods> goodsNotInList = goodsService.findAll()
+                .stream().filter(g->!goodsIds.contains(g.getId())).collect(Collectors.toList());
+        orderInfo.setGoodsNotInList(goodsNotInList);
 
-        OrderInfo orderinfo = new OrderInfo();
-        orderinfo.setClientInfo(clientInfo);
-        orderinfo.setGoodsInList(goodsInList);
-        orderinfo.setGoodsNotInList(goodsNotInList);
-
-        return orderinfo;
+        return orderInfo;
     }
 
     @PatchMapping("/{id}")

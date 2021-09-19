@@ -37,15 +37,6 @@ public class GoodsServiceImpl implements GoodsService{
     }
 
     @Override
-    public Goods update(Integer id, Goods goodsUpdated) {
-        Goods goods = goodsDao.findById(id).orElseThrow();
-        goods.setName(goodsUpdated.getName());
-        goods.setPrice(goodsUpdated.getPrice());
-
-        return goodsDao.save(goods);
-    }
-
-    @Override
     public void deleteById(Integer id) {
         goodsDao.deleteById(id);
     }

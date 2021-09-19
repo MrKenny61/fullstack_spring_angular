@@ -37,12 +37,11 @@ public class Order {
         return id;
     }
 
-    @NonNull
     public String getClient() {
         return client;
     }
 
-    public void setClient(@NonNull String client) {
+    public void setClient(String client) {
         this.client = client;
     }
 
@@ -50,12 +49,11 @@ public class Order {
         return date;
     }
 
-    @NonNull
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(@NonNull String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
