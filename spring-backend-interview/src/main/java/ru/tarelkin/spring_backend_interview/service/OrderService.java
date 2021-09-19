@@ -4,7 +4,6 @@ import ru.tarelkin.spring_backend_interview.model.Order;
 import ru.tarelkin.spring_backend_interview.model.OrderInfo;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
     List<Order> findAll();
