@@ -1,0 +1,35 @@
+<h2>Edit Goods In Order</h2>
+<form #updateGoodsInOrderForm="ngForm" (ngSubmit) = "onSubmit()">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Price</th>
+                <th>Cost</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let product of goodsInOrder; let i=index">
+                <td>{{ product.name }}</td>
+                <td><input type="number" required min="1" [(ngModel)]="product.count" name="count{{i}}" #count="ngModel"></td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.cost }}</td>
+                <td><input type="checkbox" [(ngModel)]="product.deleted" name="deleted{{i}}"></td>
+                <div *ngIf="count.invalid && (count.dirty || count.touched)" class="alert alert-danger">
+                    <div *ngIf="count.errors?.required">
+                        Count is required
+                    </div>
+                    <div *ngIf="count.errors?.min">
+                        Count must be positive
+                    </div>
+                </div>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button [disabled]="!updateGoodsInOrderForm.form.valid" class="btn btn-success" type="submit">Submit</button>
+        <a href="/orders/{{id}}"><button class="btn btn-primary" type="button">Cancel</button></a>
+    </div>
+</form>

@@ -1,6 +1,7 @@
 package ru.tarelkin.spring_backend_interview.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "order_line")
@@ -54,5 +55,18 @@ public class OrderLine {
     @Override
     public String toString() {
         return "ID " + id + "; Count " + count;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderLine)) return false;
+        OrderLine orderLine = (OrderLine) o;
+        return count == orderLine.count && Objects.equals(id, orderLine.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, count);
     }
 }

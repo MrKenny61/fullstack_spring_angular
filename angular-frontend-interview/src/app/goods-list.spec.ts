@@ -1,7 +1,7 @@
-import { GoodsList } from './goods-list';
+import { GoodsInOrder } from './goods-in-order';
 
-describe('GoodsList', () => {
+describe('GoodsInOrder', () => {
   it('should create an instance', () => {
-    expect(new GoodsList()).toBeTruthy();
+    expect(new GoodsInOrder()).toBeTruthy();
   });
 });

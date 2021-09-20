@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { GoodsList } from '../goods-list';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GoodsInOrder } from '../goods-in-order';
 import { Order } from '../order';
 import { OrderInfo } from '../order-info';
 import { OrderService } from '../order.service';
@@ -12,22 +12,35 @@ import { OrderService } from '../order.service';
 })
 export class OrderInfoComponent implements OnInit {
   clientInfo: Order = new Order();
-  goodsInList: GoodsList[] = [];
+  goodsInOrder: GoodsInOrder[] = [];
   id: number = 0;
   totalCost: number = 0;
+  len = 0;
 
   constructor(private orderService: OrderService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-
     this.orderService.getOrderById(this.id).subscribe(data => {
       this.clientInfo = data.clientInfo!;
-      this.goodsInList = data.goodsInList!;
-      data.goodsInList!.forEach(gin => this.totalCost += gin.cost || 0)
+      this.goodsInOrder = data.goodsInOrder!;
+      data.goodsInOrder!.forEach(gin => this.totalCost += gin.cost || 0);
+      this.len = data.countGoodsNotInOrder || 0;
       console.log(data);
     }, error => console.error(error));
   }
 
+  editClientInfo(id: number) {
+    this.router.navigate(['/orders', id, 'edit-client-info'])
+  }
+
+  editGoodsInOrder(id: number) {
+    this.router.navigate(['/orders', id, 'edit-goods'])
+  }
+
+  addGoodsInOrder(id: number) {
+    this.router.navigate(['/orders', id, 'add-goods'])
+  }
 }

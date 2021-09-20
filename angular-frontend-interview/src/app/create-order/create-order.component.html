@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let product of goodsList; let i=index">
+            <tr *ngFor="let product of goodsInOrder; let i=index">
                 <td><input type="text" readonly value={{product.name}}  [(ngModel)]="product.name" name="product.name{{i}}"></td>
                 <td><input min="0" type="number" value="0" [(ngModel)]="product.count" name="count{{i}}" #count="ngModel"></td>
                 <div *ngIf="count.invalid && (count.dirty || count.touched)" class="alert alert-danger">

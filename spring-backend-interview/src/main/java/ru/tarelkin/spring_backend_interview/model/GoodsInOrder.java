@@ -1,20 +1,20 @@
 package ru.tarelkin.spring_backend_interview.model;
 
-public class GoodsList {
+public class GoodsInOrder {
     private Integer id;
     private String name;
     private int count;
     private int price;
     private boolean deleted = false;
 
-    public GoodsList(Integer id, String name, int count, int price) {
+    public GoodsInOrder(Integer id, String name, int count, int price) {
         this.id = id;
         this.name = name;
         this.count = count;
         this.price = price;
     }
 
-    public GoodsList() {
+    public GoodsInOrder() {
     }
 
     public Integer getId() {
@@ -57,6 +57,7 @@ public class GoodsList {
         this.deleted = deleted;
     }
 
+    @Override
     public String toString() {
         return "Product name: " + name + "; Price: " + price + "; "
                 + "Count: " + count + "; Total cost: " + count * price

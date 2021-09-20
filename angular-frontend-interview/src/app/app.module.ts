@@ -9,9 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { UpdateGoodsComponent } from './update-goods/update-goods.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OrdersListComponent } from './orders-list/orders-list.component';
-import { EditOrderComponent } from './edit-order/edit-order.component';
 import { OrderInfoComponent } from './order-info/order-info.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
+import { EditClientInfoComponent } from './edit-client-info/edit-client-info.component';
+import { EditGoodsInOrderComponent } from './edit-goods-in-order/edit-goods-in-order.component';
+import { AddGoodsInOrderComponent } from './add-goods-in-order/add-goods-in-order.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +23,11 @@ import { CreateOrderComponent } from './create-order/create-order.component';
     UpdateGoodsComponent,
     PageNotFoundComponent,
     OrdersListComponent,
-    EditOrderComponent,
     OrderInfoComponent,
-    CreateOrderComponent
+    CreateOrderComponent,
+    EditClientInfoComponent,
+    EditGoodsInOrderComponent,
+    AddGoodsInOrderComponent
   ],
   imports: [
     BrowserModule,

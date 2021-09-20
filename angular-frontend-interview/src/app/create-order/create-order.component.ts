@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Goods } from '../goods';
-import { GoodsList } from '../goods-list';
+import { GoodsInOrder } from '../goods-in-order';
 import { GoodsService } from '../goods.service';
 import { Order } from '../order';
 import { OrderInfo } from '../order-info';
@@ -14,7 +14,7 @@ import { OrderService } from '../order.service';
 })
 export class CreateOrderComponent implements OnInit {
   clientInfo: Order = new Order();
-  goodsList: GoodsList[] = [];
+  goodsInOrder: GoodsInOrder[] = [];
   orderInfo: OrderInfo = new OrderInfo();
 
   constructor(private goodsService: GoodsService,
@@ -24,20 +24,25 @@ export class CreateOrderComponent implements OnInit {
   ngOnInit(): void {
     this.goodsService.getGoodsList().subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        this.goodsList[i] = data[i];
-        this.goodsList[i].count = 0;
+        this.goodsInOrder[i] = data[i];
+        this.goodsInOrder[i].count = 0;
       }
-      console.log(this.goodsList);
+      console.log(data);
       
     });
   }
 
   onSubmit(){
     let totalCount = 0;
-    this.goodsList.forEach(gl => totalCount += gl.count!);
+    for (let i = 0; i < this.goodsInOrder.length; i++) {
+      if (this.goodsInOrder[i].count! == null) {
+        this.goodsInOrder[i].count! = 0;
+      }
+      totalCount += this.goodsInOrder[i].count!;
+    }
     if (totalCount > 0) {
       this.orderInfo.clientInfo = this.clientInfo;
-      this.orderInfo.goodsInList = this.goodsList;
+      this.orderInfo.goodsInOrder = this.goodsInOrder;
       console.log(this.orderInfo);
       this.orderService.createOrder(this.orderInfo).subscribe(data => {
         console.log(data);

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tarelkin.spring_backend_interview.dao.OrderLineDao;
 import ru.tarelkin.spring_backend_interview.model.Goods;
-import ru.tarelkin.spring_backend_interview.model.GoodsList;
+import ru.tarelkin.spring_backend_interview.model.GoodsInOrder;
 import ru.tarelkin.spring_backend_interview.model.Order;
 import ru.tarelkin.spring_backend_interview.model.OrderLine;
 
@@ -20,8 +20,8 @@ public class OrderLineServiceImpl implements OrderLineService{
     }
 
     @Override
-    public List<GoodsList> getGoodsListByOrderId(Integer id) {
-        return orderLineDao.getGoodsListByOrderId(id);
+    public List<GoodsInOrder> getGoodsListByOrderId(Integer id) {
+        return orderLineDao.getGoodsInOrderByOrderId(id);
     }
 
     @Override

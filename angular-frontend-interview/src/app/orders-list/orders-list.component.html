@@ -15,7 +15,6 @@
             <td>{{ order.date | date:'medium' }}</td>
             <td>
                 <button (click)="orderInfo(order.id!)" class="btn btn-info mx-2">Info</button>
-                <button (click)="editOrder(order.id!)" class="btn btn-primary mx-2">Edit</button>
                 <button (click)="deleteOrder(order.id!)" class="btn btn-danger mx-2">Delete</button>
             </td>
         </tr>

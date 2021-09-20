@@ -4,9 +4,9 @@ import java.util.List;
 
 public class OrderInfo {
     private Order clientInfo;
-    private List<GoodsList> goodsInList;
-    private List<Goods> goodsNotInList;
-    private GoodsList addedGoods;
+    private List<GoodsInOrder> goodsInOrder;
+    private int countGoodsNotInOrder;
+    private List<GoodsInOrder> addedGoods;
 
     public Order getClientInfo() {
         return clientInfo;
@@ -16,27 +16,29 @@ public class OrderInfo {
         this.clientInfo = clientInfo;
     }
 
-    public List<GoodsList> getGoodsInList() {
-        return goodsInList;
+    public List<GoodsInOrder> getGoodsInOrder() {
+        return goodsInOrder;
     }
 
-    public void setGoodsInList(List<GoodsList> goodsInList) {
-        this.goodsInList = goodsInList;
+    public void setGoodsInOrder(List<GoodsInOrder> goodsInList) {
+        this.goodsInOrder = goodsInList;
     }
 
-    public List<Goods> getGoodsNotInList() {
-        return goodsNotInList;
+    public int getCountGoodsNotInOrder() {
+        return countGoodsNotInOrder;
     }
 
-    public void setGoodsNotInList(List<Goods> goodsNotInList) {
-        this.goodsNotInList = goodsNotInList;
+    public void setCountGoodsNotInOrder(int countGoodsNotInOrder) {
+        this.countGoodsNotInOrder = countGoodsNotInOrder;
     }
 
-    public GoodsList getAddedGoods() {
+    public List<GoodsInOrder> getAddedGoods() {
         return addedGoods;
     }
 
-    public void setAddedGoods(GoodsList addedGoods) {
+    public void setAddedGoods(List<GoodsInOrder> addedGoods) {
         this.addedGoods = addedGoods;
     }
+
+
 }

@@ -36,7 +36,21 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public OrderInfo getOrderById(@PathVariable Integer id) {
-        return orderService.getOrderById(id);
+        Order clientInfo = orderService.findById(id);
+
+        List<GoodsInOrder> goodsInOrder = orderLineService.getGoodsListByOrderId(id);
+
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setClientInfo(clientInfo);
+        orderInfo.setGoodsInOrder(goodsInOrder);
+
+        List<Integer> goodsIds = new ArrayList<>();
+        orderInfo.getGoodsInOrder().forEach(g->goodsIds.add(g.getId()));
+        List<Goods> g = goodsService.findAll();
+        int countGoodsNotInOrder = g.size() - goodsInOrder.size();
+        orderInfo.setCountGoodsNotInOrder(countGoodsNotInOrder);
+
+        return orderInfo;
     }
 
     @PostMapping
@@ -45,65 +59,90 @@ public class OrderController {
         orderNew.setClient(orderInfo.getClientInfo().getClient());
         orderNew.setAddress(orderInfo.getClientInfo().getAddress());
         Order order = orderService.save(orderNew);
+        orderInfo.setClientInfo(order);
 
-        for (GoodsList goodsList : orderInfo.getGoodsInList()) {
-            if (goodsList.getCount() != 0) {
+        for (GoodsInOrder goodsInOrder : orderInfo.getGoodsInOrder()) {
+            if (goodsInOrder.getCount() != 0) {
                 OrderLine orderLineNew = new OrderLine();
                 orderLineNew.setOrder(order);
-                orderLineNew.setGoods(goodsService.findById(goodsList.getId()));
-                orderLineNew.setCount(goodsList.getCount());
+                orderLineNew.setGoods(goodsService.findById(goodsInOrder.getId()));
+                orderLineNew.setCount(goodsInOrder.getCount());
                 orderLineService.save(orderLineNew);
             }
         }
         return orderInfo;
     }
 
-    @GetMapping("/{id}/edit")
-    public OrderInfo editOrder(@PathVariable Integer id) {
-        OrderInfo orderInfo = orderService.getOrderById(id);
-
-        List<Integer> goodsIds = new ArrayList<>();
-        orderInfo.getGoodsInList().forEach(g->goodsIds.add(g.getId()));
-        List<Goods> goodsNotInList = goodsService.findAll()
-                .stream().filter(g->!goodsIds.contains(g.getId())).collect(Collectors.toList());
-        orderInfo.setGoodsNotInList(goodsNotInList);
-
-        return orderInfo;
+    @GetMapping("/{id}/edit-client-info")
+    public Order editClientInfo(@PathVariable Integer id) {
+        return orderService.findById(id);
     }
 
-    @PatchMapping("/{id}")
-    public OrderInfo updateOrder(@PathVariable Integer id, @RequestBody OrderInfo orderInfo) {
+    @PatchMapping("/{id}/update-client-info")
+    public Order updateClientInfo(@PathVariable Integer id, @RequestBody Order clientInfo) {
         Order order = orderService.findById(id);
-        order.setClient(orderInfo.getClientInfo().getClient());
-        order.setAddress(orderInfo.getClientInfo().getAddress());
+        order.setClient(clientInfo.getClient());
+        order.setAddress(clientInfo.getAddress());
+        orderService.save(order);
 
-        for (GoodsList goodsList : orderInfo.getGoodsInList()) {
-            Goods goods = goodsService.findById(goodsList.getId());
+        return order;
+    }
+
+    @GetMapping("/{id}/edit-goods")
+    public List<GoodsInOrder> editGoodsInOrder(@PathVariable Integer id) {
+        return orderLineService.getGoodsListByOrderId(id);
+    }
+
+    @PatchMapping("/{id}/update-goods")
+    public List<GoodsInOrder> updateGoodsInOrder(@PathVariable Integer id, @RequestBody List<GoodsInOrder> goodsInOrderList) {
+        Order order = orderService.findById(id);
+
+        for (GoodsInOrder goodsInOrder : goodsInOrderList) {
+            Goods goods = goodsService.findById(goodsInOrder.getId());
             OrderLine orderLine = orderLineService.findOrderLineByOrderAndGoods(order, goods);
-            if (goodsList.isDeleted()) {
+            if (goodsInOrder.isDeleted()) {
                 orderLineService.delete(orderLine);
             } else {
-                orderLine.setCount(goodsList.getCount());
+                orderLine.setCount(goodsInOrder.getCount());
+                orderLineService.save(orderLine);
             }
         }
 
-        if (orderInfo.getAddedGoods().getName() != null && !orderInfo.getAddedGoods().getName().isEmpty()
-                && orderInfo.getAddedGoods().getCount() != 0) {
-            OrderLine orderLineNew = new OrderLine();
-            orderLineNew.setOrder(order);
-            Goods g = goodsService.findByName(orderInfo.getAddedGoods().getName());
-            System.out.println(g);
-            orderLineNew.setGoods(g);
-            orderLineNew.setCount(orderInfo.getAddedGoods().getCount());
-            orderLineService.save(orderLineNew);
+        return goodsInOrderList;
+    }
+
+    @GetMapping("/{id}/add-goods")
+    public List<Goods> getGoodsNotInOrder(@PathVariable Integer id) {
+        List<Integer> goodsIds = new ArrayList<>();
+        List<GoodsInOrder> goodsInOrder = orderLineService.getGoodsListByOrderId(id);
+        goodsInOrder.forEach(g->goodsIds.add(g.getId()));
+
+        return goodsService.findAll()
+                .stream().filter(g->!goodsIds.contains(g.getId())).collect(Collectors.toList());
+    }
+
+    @PatchMapping("/{id}/add-goods")
+    public List<GoodsInOrder> addGoodsInOrder(@PathVariable Integer id, @RequestBody List<GoodsInOrder> goods) {
+        Order order = orderService.findById(id);
+        List<GoodsInOrder> addedGoods = new ArrayList<>();
+
+        for (GoodsInOrder goodsInOrder : goods) {
+            if (goodsInOrder.getCount() != 0) {
+                OrderLine orderLine = new OrderLine();
+                orderLine.setOrder(order);
+                orderLine.setGoods(goodsService.findByName(goodsInOrder.getName()));
+                orderLine.setCount(goodsInOrder.getCount());
+                orderLineService.save(orderLine);
+                addedGoods.add(goodsInOrder);
+            }
         }
 
-        return orderInfo;
+        return addedGoods;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteOrder(@PathVariable Integer id) {
-        Order order = orderService.findById(id);
+        orderService.findById(id);
         orderService.deleteById(id);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);

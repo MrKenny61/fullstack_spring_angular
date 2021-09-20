@@ -1,7 +1,6 @@
 package ru.tarelkin.spring_backend_interview.dao;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.tarelkin.spring_backend_interview.model.Goods;
-import ru.tarelkin.spring_backend_interview.model.GoodsList;
+import ru.tarelkin.spring_backend_interview.model.GoodsInOrder;
 import ru.tarelkin.spring_backend_interview.model.Order;
 import ru.tarelkin.spring_backend_interview.model.OrderLine;
 
@@ -93,12 +92,12 @@ public class OrderLineDaoTest {
     }
 
     @Test
-    public void getGoodsListByOrderIdTest() {
+    public void getGoodsInOrderByOrderIdTest() {
         System.out.println("OrderLineDaoTest::getGoodsListByOrderIdTest()");
 
-        List<GoodsList> goodsList = orderLineDao.getGoodsListByOrderId(idOrder);
+        List<GoodsInOrder> goodsInOrder = orderLineDao.getGoodsInOrderByOrderId(idOrder);
 
-        Assertions.assertThat(goodsList).isNotNull();
+        Assertions.assertThat(goodsInOrder).isNotNull();
     }
 
     @Test

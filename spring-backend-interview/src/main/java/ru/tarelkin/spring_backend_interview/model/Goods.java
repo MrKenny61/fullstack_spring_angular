@@ -4,6 +4,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -60,6 +61,19 @@ public class Goods {
 
     @Override
     public String toString() {
-        return "Product " + name + "; Price " + price;
+        return "ID " + id + "; Product " + name + "; Price " + price + "; OrderLines " + orderLines;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Goods)) return false;
+        Goods goods = (Goods) o;
+        return price == goods.price && Objects.equals(id, goods.id) && name.equals(goods.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price);
     }
 }

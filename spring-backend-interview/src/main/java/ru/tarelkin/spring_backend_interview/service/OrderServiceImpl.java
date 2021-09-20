@@ -3,22 +3,17 @@ package ru.tarelkin.spring_backend_interview.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tarelkin.spring_backend_interview.dao.OrderDao;
-import ru.tarelkin.spring_backend_interview.dao.OrderLineDao;
-import ru.tarelkin.spring_backend_interview.model.GoodsList;
 import ru.tarelkin.spring_backend_interview.model.Order;
-import ru.tarelkin.spring_backend_interview.model.OrderInfo;
 
 import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService{
     private OrderDao orderDao;
-    private OrderLineDao orderLineDao;
 
     @Autowired
-    public OrderServiceImpl(OrderDao orderDao, OrderLineDao orderLineDao) {
+    public OrderServiceImpl(OrderDao orderDao) {
         this.orderDao = orderDao;
-        this.orderLineDao = orderLineDao;
     }
 
     @Override
@@ -29,19 +24,6 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Order findById(Integer id) {
         return orderDao.findById(id).orElseThrow();
-    }
-
-    @Override
-    public OrderInfo getOrderById(Integer id) {
-        Order clientInfo = orderDao.findById(id).orElseThrow();
-
-        List<GoodsList> goodsInList = orderLineDao.getGoodsListByOrderId(id);
-
-        OrderInfo orderinfo = new OrderInfo();
-        orderinfo.setClientInfo(clientInfo);
-        orderinfo.setGoodsInList(goodsInList);
-
-        return orderinfo;
     }
 
     @Override

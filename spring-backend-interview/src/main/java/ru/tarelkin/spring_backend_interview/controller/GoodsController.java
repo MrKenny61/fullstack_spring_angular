@@ -1,9 +1,7 @@
 package ru.tarelkin.spring_backend_interview.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.tarelkin.spring_backend_interview.dao.GoodsDao;
 import ru.tarelkin.spring_backend_interview.model.Goods;
 import ru.tarelkin.spring_backend_interview.service.GoodsService;
 
@@ -32,7 +30,6 @@ public class GoodsController {
         return goodsService.save(goods);
     }
 
-    //update goods
     @GetMapping("/{id}/edit")
     public Goods editGoods(@PathVariable Integer id) {
         return goodsService.findById(id);
@@ -53,6 +50,7 @@ public class GoodsController {
         goodsService.deleteById(id);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
+
         return response;
     }
 }

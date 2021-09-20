@@ -5,6 +5,7 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -65,8 +66,22 @@ public class Order {
         this.orderLines = orderLines;
     }
 
+    @Override
     public String toString() {
         return client + " " + address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) && client.equals(order.client) && address.equals(order.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, client, address);
     }
 }
 

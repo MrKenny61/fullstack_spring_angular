@@ -1,7 +1,7 @@
 <h2>Order Info</h2>
 <h3>Client: {{ clientInfo.client }}</h3>
 <h3>Address: {{ clientInfo.address }}</h3>
-
+<div><button (click)="editClientInfo(id)" class="btn btn-info mx-2">Change Client Info</button></div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor = "let product of goodsInList">
+        <tr *ngFor = "let product of goodsInOrder">
             <td>{{ product.name }}</td>
             <td>{{ product.count }}</td>
             <td>{{ product.price }}</td>
@@ -26,6 +26,8 @@
         </tr>
     </tbody>
 </table>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a href="/orders"><button class="btn btn-primary" type="button">Back</button></a>
-</div>
+<div class="d-flex justify-content-md-end">
+    <div class="me-2"><button (click)="editGoodsInOrder(id)" class="btn btn-info" >Edit Goods</button></div>
+    <div *ngIf="len > 0"><button (click)="addGoodsInOrder(id)" class="btn btn-info">Add Goods</button></div>
+    <div class="ms-2"><a href="/orders"><button class="btn btn-primary" type="button">Back</button></a></div>
+  </div>

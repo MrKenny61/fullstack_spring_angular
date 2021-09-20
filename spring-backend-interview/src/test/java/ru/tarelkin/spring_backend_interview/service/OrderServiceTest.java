@@ -8,10 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import ru.tarelkin.spring_backend_interview.dao.OrderDao;
 import ru.tarelkin.spring_backend_interview.dao.OrderLineDao;
-import ru.tarelkin.spring_backend_interview.model.Goods;
-import ru.tarelkin.spring_backend_interview.model.GoodsList;
 import ru.tarelkin.spring_backend_interview.model.Order;
-import ru.tarelkin.spring_backend_interview.model.OrderInfo;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -26,8 +23,6 @@ public class OrderServiceTest {
 
     @Mock
     OrderDao orderDao;
-    @Mock
-    OrderLineDao orderLineDao;
 
     @Test
     public void findAllOrdersTest() {
@@ -52,21 +47,6 @@ public class OrderServiceTest {
         Assertions.assertThat(order.getClient()).isEqualTo("client_1");
         Assertions.assertThat(order.getAddress()).isEqualTo("address");
         verify(orderDao, times(1)).findById(1);
-    }
-
-    @Test
-    public void getOrderByIdTest() {
-        List<GoodsList> list = Arrays.asList(new GoodsList(1, "goods_1", 2, 3),
-                new GoodsList(2, "goods_2", 2, 3),
-                new GoodsList(3, "goods_3", 2, 3));
-
-        when(orderLineDao.getGoodsListByOrderId(1)).thenReturn(list);
-        when(orderDao.findById(1)).thenReturn(java.util.Optional.of(new Order(1, "client", new Date(), "address")));
-
-        OrderInfo orderInfo = orderService.getOrderById(1);
-
-        verify(orderDao, times(1)).findById(1);
-        verify(orderLineDao, times(1)).getGoodsListByOrderId(1);
     }
 
     @Test

@@ -28,10 +28,6 @@ export class OrdersListComponent implements OnInit {
     this.router.navigate(['orders',id]);
   }
 
-  editOrder(id: number) {
-    this.router.navigate(['orders',id,'edit'])
-  }
-
   deleteOrder(id: number) {
     this.orderService.deleteOrder(id).subscribe(data => {
       console.log(data);

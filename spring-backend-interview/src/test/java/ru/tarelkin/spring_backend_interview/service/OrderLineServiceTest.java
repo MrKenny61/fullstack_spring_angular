@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import ru.tarelkin.spring_backend_interview.dao.OrderLineDao;
 import ru.tarelkin.spring_backend_interview.model.Goods;
-import ru.tarelkin.spring_backend_interview.model.GoodsList;
+import ru.tarelkin.spring_backend_interview.model.GoodsInOrder;
 import ru.tarelkin.spring_backend_interview.model.Order;
 import ru.tarelkin.spring_backend_interview.model.OrderLine;
 
@@ -27,16 +27,16 @@ public class OrderLineServiceTest {
 
     @Test
     public void getGoodsListByOrderIdTest() {
-        List<GoodsList> list = Arrays.asList(new GoodsList(1, "goods_1", 2, 3),
-                new GoodsList(2, "goods_2", 2, 3),
-                new GoodsList(3, "goods_3", 2, 3));
+        List<GoodsInOrder> list = Arrays.asList(new GoodsInOrder(1, "goods_1", 2, 3),
+                new GoodsInOrder(2, "goods_2", 2, 3),
+                new GoodsInOrder(3, "goods_3", 2, 3));
 
-        when(orderLineDao.getGoodsListByOrderId(1)).thenReturn(list);
+        when(orderLineDao.getGoodsInOrderByOrderId(1)).thenReturn(list);
 
-        List<GoodsList> goodsList = orderLineService.getGoodsListByOrderId(1);
+        List<GoodsInOrder> goodsInOrder = orderLineService.getGoodsListByOrderId(1);
 
-        Assertions.assertThat(goodsList.size()).isEqualTo(3);
-        verify(orderLineDao, times(1)).getGoodsListByOrderId(1);
+        Assertions.assertThat(goodsInOrder.size()).isEqualTo(3);
+        verify(orderLineDao, times(1)).getGoodsInOrderByOrderId(1);
     }
 
     @Test
