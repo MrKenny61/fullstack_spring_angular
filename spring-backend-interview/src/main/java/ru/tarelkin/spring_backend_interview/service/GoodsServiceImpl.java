@@ -3,6 +3,7 @@ package ru.tarelkin.spring_backend_interview.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tarelkin.spring_backend_interview.dao.GoodsDao;
+import ru.tarelkin.spring_backend_interview.exception.NotFoundException;
 import ru.tarelkin.spring_backend_interview.model.Goods;
 
 import java.util.List;
@@ -23,12 +24,12 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Override
     public Goods findById(Integer id) {
-        return goodsDao.findById(id).orElseThrow();
+        return goodsDao.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
     public Goods findByName(String name) {
-        return goodsDao.findByName(name).orElseThrow();
+        return goodsDao.findByName(name).orElseThrow(NotFoundException::new);
     }
 
     @Override

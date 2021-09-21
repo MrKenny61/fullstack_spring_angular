@@ -7,7 +7,7 @@ import { Goods } from './goods';
   providedIn: 'root'
 })
 export class GoodsService {
-  private baseURL="http://localhost:8080/goods";
+  private baseURL="http://localhost:8080/spring_backend_interview-0.0.1-SNAPSHOT/goods";
 
   constructor(private httpClient: HttpClient) { }
 

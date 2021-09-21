@@ -3,6 +3,7 @@ package ru.tarelkin.spring_backend_interview.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tarelkin.spring_backend_interview.dao.OrderLineDao;
+import ru.tarelkin.spring_backend_interview.exception.NotFoundException;
 import ru.tarelkin.spring_backend_interview.model.Goods;
 import ru.tarelkin.spring_backend_interview.model.GoodsInOrder;
 import ru.tarelkin.spring_backend_interview.model.Order;
@@ -26,7 +27,7 @@ public class OrderLineServiceImpl implements OrderLineService{
 
     @Override
     public OrderLine findOrderLineByOrderAndGoods(Order order, Goods goods) {
-        return orderLineDao.findOrderLineByOrderAndGoods(order, goods).orElseThrow();
+        return orderLineDao.findOrderLineByOrderAndGoods(order, goods).orElseThrow(NotFoundException::new);
     }
 
     @Override

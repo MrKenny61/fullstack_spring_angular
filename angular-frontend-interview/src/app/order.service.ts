@@ -10,7 +10,7 @@ import { OrderInfo } from './order-info';
   providedIn: 'root'
 })
 export class OrderService {
-  private baseURL="http://localhost:8080/orders";
+  private baseURL="http://localhost:8080/spring_backend_interview-0.0.1-SNAPSHOT/orders";
 
   constructor(private httpClient: HttpClient) { }
 

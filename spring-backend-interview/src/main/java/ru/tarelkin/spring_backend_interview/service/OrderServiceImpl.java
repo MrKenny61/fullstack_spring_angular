@@ -3,6 +3,7 @@ package ru.tarelkin.spring_backend_interview.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tarelkin.spring_backend_interview.dao.OrderDao;
+import ru.tarelkin.spring_backend_interview.exception.NotFoundException;
 import ru.tarelkin.spring_backend_interview.model.Order;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Order findById(Integer id) {
-        return orderDao.findById(id).orElseThrow();
+        return orderDao.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override

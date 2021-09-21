@@ -43,7 +43,6 @@ export class CreateOrderComponent implements OnInit {
     if (totalCount > 0) {
       this.orderInfo.clientInfo = this.clientInfo;
       this.orderInfo.goodsInOrder = this.goodsInOrder;
-      console.log(this.orderInfo);
       this.orderService.createOrder(this.orderInfo).subscribe(data => {
         console.log(data);
         this.router.navigate(['/orders']);
